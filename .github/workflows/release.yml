@@ -1,4 +1,4 @@
-name: Build and Release on Tag
+name: Release
 
 on:
   push:
@@ -16,7 +16,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -40,4 +40,6 @@ jobs:
       with:
         # body_path: ${{ github.workspace }}-CHANGELOG.txt
         # token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-        files: ./x64/Release/LLoader.dll
+        files: |
+          ./x64/Release/LLoader.dll
+          ./x64/Release/LLoader.pdb
