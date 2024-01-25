@@ -18,6 +18,7 @@
         delete obj;     \
 }
 
+
 struct LUnknown : IUnknown
 {
     int nCount = 0;
