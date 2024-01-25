@@ -62,5 +62,8 @@
     <ClInclude Include="Src\Animation.h">
       <Filter>Src</Filter>
     </ClInclude>
+    <ClInclude Include="Include\LAssert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
