@@ -145,6 +145,12 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>md "$(SolutionDir)Lib"
+md "$(SolutionDir)Lib\x64"
+
+copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\Animation.cpp" />
