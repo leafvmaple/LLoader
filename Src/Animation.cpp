@@ -19,15 +19,18 @@ void _LoadAnimation(LBinaryReader* pReader, ANIMATION_DESC* pDesc, ANIMATION_SOU
     pSource->fFrameLength = pBoneAni->fFrameLength;
     pSource->nAnimationLength = FrameToTime(pBoneAni->dwNumFrames - 1, pBoneAni->fFrameLength);
 
-    pSource->pBoneNames = new char[pSource->nBonesCount][ANI_STRING_SIZE];
-    for (int i = 0; i < pSource->nBonesCount; i++)
-        pReader->Copy(pSource->pBoneNames[i], ANI_STRING_SIZE);
-
-    pSource->pBoneRTS = new RTS * [pSource->nBonesCount];
+    pSource->pBoneNames.resize(pSource->nBonesCount);
     for (int i = 0; i < pSource->nBonesCount; i++)
     {
-        pSource->pBoneRTS[i] = new RTS[pSource->nFrameCount];
-        pReader->Copy(pSource->pBoneRTS[i], pSource->nFrameCount);
+		pSource->pBoneNames[i].resize(ANI_STRING_SIZE);
+        pReader->Copy(pSource->pBoneNames[i].data(), ANI_STRING_SIZE);
+    }
+
+    pSource->pBoneRTS.resize(pSource->nBonesCount);
+    for (int i = 0; i < pSource->nBonesCount; i++)
+    {
+        pSource->pBoneRTS[i].resize(pSource->nFrameCount);
+        pReader->Copy(pSource->pBoneRTS[i].data(), pSource->nFrameCount);
 
         // Rotation is Inverse
         for (int j = 0; j < pSource->nFrameCount; j++)
@@ -83,16 +86,19 @@ void _LoadAnimationV2(LBinaryReader* pReader, ANIMATION_DESC* pDesc, ANIMATION_S
     assert(bBoneName);
     assert(nRealAnimationBones > 0);
 
-    pSource->pBoneNames = new char[pSource->nBonesCount][ANI_STRING_SIZE];
+    pSource->pBoneNames.resize(pSource->nBonesCount);
     for (int i = 0; i < pSource->nBonesCount; i++)
-        pReader->Copy(pSource->pBoneNames[i], ANI_STRING_SIZE);
+    {
+        pSource->pBoneNames[i].resize(ANI_STRING_SIZE);
+        pReader->Copy(pSource->pBoneNames[i].data(), ANI_STRING_SIZE);
+    }
 
     pReader->Convert(pInitBoneRTS, pSource->nBonesCount);
     pReader->Convert(pBoneToAnimationIndies, pSource->nBonesCount);
     pReader->Convert(pAnimationIndexFlag, nRealAnimationBones);
 
-    pSource->pFlag = new int[pSource->nBonesCount];
-    memset(pSource->pFlag, 0, sizeof(int) * pSource->nBonesCount);
+    pSource->pFlag.resize(pSource->nBonesCount);
+    memset(pSource->pFlag.data(), 0, sizeof(int) * pSource->nBonesCount);
 
     InitBoneRTS.resize(pSource->nBonesCount);
     for (int i = 0; i < pSource->nBonesCount; i++)
@@ -116,12 +122,12 @@ void _LoadAnimationV2(LBinaryReader* pReader, ANIMATION_DESC* pDesc, ANIMATION_S
         }
     }
 
-    pSource->pBoneRTS = new RTS* [pSource->nBonesCount];
+    pSource->pBoneRTS.resize(pSource->nBonesCount);
     for (int i = 0; i < pSource->nBonesCount; i++)
     {
         auto nAnimationIndex = pBoneToAnimationIndies[i];
 
-        pSource->pBoneRTS[i] = new RTS[pSource->nFrameCount];
+        pSource->pBoneRTS[i].resize(pSource->nFrameCount);
         for (int j = 0; j < pSource->nFrameCount; j++)
             pSource->pBoneRTS[i][j] = InitBoneRTS[i];
 

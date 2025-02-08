@@ -1,14 +1,18 @@
 #pragma once
 
+#include "IAnimation.h"
+
 #include "LInterface.h"
 #include "LAssert.h"
 
 #include <d3d11.h>
+#include <vector>
+#include <string>
 #include <DirectXMath.h>
 
 using namespace DirectX;
 
-#define ANI_STRING_SIZE 30
+constexpr int ANI_STRING_SIZE = 30;
 const unsigned ANI_FILE_MASK = 0x414E494D;
 const unsigned ANI_FILE_MASK_VERVION2 = 0x324E494D;
 
@@ -22,7 +26,7 @@ enum ANIMATION_TYPE
     ANIMATION_BONE_16 = 12,
     ANIMATION_BONE_RTS = 13,
     ANIMATION_BLENDSHAPE = 14,
-    ANIMATION_VCIK = 15,    //视频捕捉动画关键点转FullBodyIK
+    ANIMATION_VCIK = 15,    //瑙嗛鎹曟崏鍔ㄧ敾鍏抽敭鐐硅浆FullBodyIK
     ANIMATION_COUNT,
     ANIMATION_FORCE_DWORD = 0xffffffff,
 };
@@ -57,21 +61,11 @@ struct ANIMATION_SOURCE : LUnknown
     float fFrameLength{};
     int nAnimationLength{};
 
-    char (*pBoneNames)[ANI_STRING_SIZE] {};
-    RTS** pBoneRTS{};
+    std::vector<std::string> pBoneNames;
+    std::vector<std::vector<RTS>> pBoneRTS;
+    std::vector<int> pFlag;
 
-    int* pFlag{};
-
-    virtual ~ANIMATION_SOURCE() {
-        delete[] pBoneNames;
-        delete[] pFlag;
-        if (nBonesCount > 0)
-        {
-            for (int i = 0; i < nBonesCount; i++)
-                delete[] pBoneRTS[i];
-            delete[] pBoneRTS;
-        }
-    }
+    virtual ~ANIMATION_SOURCE() = default;
 };
 
 L3DENGINE_API void LoadAnimation(ANIMATION_DESC* pDesc, ANIMATION_SOURCE*& pSource);
