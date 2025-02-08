@@ -9,8 +9,8 @@
 using namespace DirectX;
 
 #define ANI_STRING_SIZE 30
-const unsigned	ANI_FILE_MASK = 0x414E494D;
-const unsigned	ANI_FILE_MASK_VERVION2 = 0x324E494D;
+const unsigned ANI_FILE_MASK = 0x414E494D;
+const unsigned ANI_FILE_MASK_VERVION2 = 0x324E494D;
 
 enum ANIMATION_TYPE
 {
@@ -22,8 +22,8 @@ enum ANIMATION_TYPE
     ANIMATION_BONE_16 = 12,
     ANIMATION_BONE_RTS = 13,
     ANIMATION_BLENDSHAPE = 14,
-    ANIMATION_VCIK = 15,	//视频捕捉动画关键点转FullBodyIK
-    ANIMATION_COUNT, 
+    ANIMATION_VCIK = 15,    //视频捕捉动画关键点转FullBodyIK
+    ANIMATION_COUNT,
     ANIMATION_FORCE_DWORD = 0xffffffff,
 };
 
@@ -36,40 +36,40 @@ enum BONE_FLAG
 
 struct ANIMATION_DESC
 {
-    const char* szFileName = nullptr;
+    const char* szFileName{};
 };
 
 struct RTS
 {
-    XMFLOAT3 Translation = { 0.f, 0.f, 0.f };
-    XMFLOAT3 Scale = { 1.f, 1.f, 1.f };
-    XMFLOAT4 Rotation = { 0.f, 0.f, 0.f, 1.f };
-    float Sign = 1.f;
-    XMFLOAT4 SRotation = { 0.f, 0.f, 0.f, 1.f };
+    XMFLOAT3 Translation{ 0.f, 0.f, 0.f };
+    XMFLOAT3 Scale{ 1.f, 1.f, 1.f };
+    XMFLOAT4 Rotation{ 0.f, 0.f, 0.f, 1.f };
+    float Sign{ 1.f };
+    XMFLOAT4 SRotation{ 0.f, 0.f, 0.f, 1.f };
 };
 
 struct ANIMATION_SOURCE : LUnknown
 {
-    int nAnimationType = 0;
+    int nAnimationType{};
 
-    int nBonesCount = 0;
-    int nFrameCount = 0;
-    float fFrameLength = 0;
-    int nAnimationLength = 0;
+    int nBonesCount{};
+    int nFrameCount{};
+    float fFrameLength{};
+    int nAnimationLength{};
 
-    char (*pBoneNames)[ANI_STRING_SIZE] = nullptr;
-    RTS** pBoneRTS = nullptr;
+    char (*pBoneNames)[ANI_STRING_SIZE] {};
+    RTS** pBoneRTS{};
 
-    int* pFlag = nullptr;
+    int* pFlag{};
 
     virtual ~ANIMATION_SOURCE() {
-        SAFE_DELETE_ARRAY(pBoneNames);
-        SAFE_DELETE_ARRAY(pFlag);
+        delete[] pBoneNames;
+        delete[] pFlag;
         if (nBonesCount > 0)
         {
             for (int i = 0; i < nBonesCount; i++)
-                SAFE_DELETE_ARRAY(pBoneRTS[i]);
-            SAFE_DELETE_ARRAY(pBoneRTS);
+                delete[] pBoneRTS[i];
+            delete[] pBoneRTS;
         }
     }
 };

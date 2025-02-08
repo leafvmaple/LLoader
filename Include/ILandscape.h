@@ -12,47 +12,47 @@ using namespace DirectX;
 
 struct LANDSCAPE_DESC
 {
-    const wchar_t* szDir = nullptr;
-    const wchar_t* szMapName = nullptr;
+    const wchar_t* szDir{};
+    const wchar_t* szMapName{};
 };
 
 struct LANDSCAPE_REGION
 {
-    int nMaterial = 0;
-    int* pMaterialIDs = nullptr;
+    int nMaterial{};
+    int* pMaterialIDs{};
 
-    int nHeightData = 0;
-    float* pHeightData = nullptr;
+    int nHeightData{};
+    float* pHeightData{};
 
     ~LANDSCAPE_REGION() {
-        SAFE_DELETE_ARRAY(pMaterialIDs);
-        SAFE_DELETE_ARRAY(pHeightData);
+        delete[] pMaterialIDs;
+        delete[] pHeightData;
     }
 };
 
 struct LANDSCAPE_MATERIAL
 {
-    int nLODCount = 0;
-    MATERIAL_SOURCE* pLOD = nullptr; // every LOD has a material
+    int nLODCount{};
+    MATERIAL_SOURCE* pLOD{}; // every LOD has a material
 };
 
 struct LANDSCAPE_SOURCE : LUnknown
 {
-    UINT        RegionSize;
-    UINT        LeafNodeSize;
-    XMFLOAT2   WorldOrigin;
-    XMFLOAT2   UnitScale;
+    UINT        RegionSize{};
+    UINT        LeafNodeSize{};
+    XMFLOAT2    WorldOrigin{};
+    XMFLOAT2    UnitScale{};
 
-    XMUINT2     RegionTableSize;
+    XMUINT2     RegionTableSize{};
 
-    int nMaterialCount = 0;
-    LANDSCAPE_MATERIAL* pMaterials = nullptr;
+    int nMaterialCount{};
 
-    LANDSCAPE_REGION* pRegionTable = nullptr;
+    LANDSCAPE_MATERIAL* pMaterials{};
+    LANDSCAPE_REGION* pRegionTable{};
 
     virtual ~LANDSCAPE_SOURCE() {
-        SAFE_DELETE_ARRAY(pRegionTable);
-        SAFE_DELETE_ARRAY(pMaterials);
+        delete[] pRegionTable;
+        delete[] pMaterials;
     }
 };
 
