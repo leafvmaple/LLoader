@@ -122,10 +122,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>md "$(SolutionDir)Lib"
-md "$(SolutionDir)Lib\x64"
+      <Command>md "$(SolutionDir)Product"
 
-copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
+copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Product"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

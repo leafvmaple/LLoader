@@ -171,13 +171,10 @@ void _LoadAnimationV2(LBinaryReader* pReader, ANIMATION_DESC* pDesc, ANIMATION_S
     return;
 }
 
-void LoadAnimation(ANIMATION_DESC* pDesc, ANIMATION_SOURCE*& pSource)
+void LoadAnimation(ANIMATION_DESC* pDesc, ANIMATION_SOURCE* pSource)
 {
     LBinaryReader Reader;
     _ANI_FILE_HEADER* pHead = nullptr;
-
-    pSource = new ANIMATION_SOURCE;
-    pSource->AddRef();
 
     Reader.Init(pDesc->szFileName);
     Reader.Convert(pHead);

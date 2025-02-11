@@ -34,6 +34,8 @@ enum BONE_FLAG
     BONE_FLAG_NO_UPDATE = 1 << 1,
 };
 
+#pragma pack(push, 8)
+
 struct ANIMATION_DESC
 {
     const char* szFileName{};
@@ -48,7 +50,7 @@ struct RTS
     XMFLOAT4 SRotation{ 0.f, 0.f, 0.f, 1.f };
 };
 
-struct ANIMATION_SOURCE : LUnknown
+struct ANIMATION_SOURCE
 {
     int nAnimationType{};
 
@@ -57,12 +59,12 @@ struct ANIMATION_SOURCE : LUnknown
     float fFrameLength{};
     int nAnimationLength{};
 
-    char (*pBoneNames)[ANI_STRING_SIZE] {};
+    char (*pBoneNames)[ANI_STRING_SIZE]{};
     RTS** pBoneRTS{};
 
     int* pFlag{};
 
-    virtual ~ANIMATION_SOURCE() {
+    ~ANIMATION_SOURCE() {
         delete[] pBoneNames;
         delete[] pFlag;
         if (nBonesCount > 0)
@@ -74,4 +76,6 @@ struct ANIMATION_SOURCE : LUnknown
     }
 };
 
-L3DENGINE_API void LoadAnimation(ANIMATION_DESC* pDesc, ANIMATION_SOURCE*& pSource);
+#pragma pack(pop)
+
+L3DENGINE_API void LoadAnimation(ANIMATION_DESC* pDesc, ANIMATION_SOURCE* pSource);
