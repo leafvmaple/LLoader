@@ -265,11 +265,8 @@ void _LoadSocket(MESH_SOURCE* pSource, _MESH_FILE_DATA* pData, LBinaryReader* pR
     }
 }
 
-void LoadMesh(MESH_DESC* pDesc, MESH_SOURCE*& pSource)
+void LoadMesh(MESH_DESC* pDesc, MESH_SOURCE* pSource)
 {
-    pSource = new MESH_SOURCE;
-    pSource->AddRef();
-
     _MESH_FILE_DATA MeshData = { 0 };
 
     _LoadMesh(pDesc->szName, pSource, &MeshData);

@@ -23,6 +23,8 @@ enum D3DFVF
     FVF_TANGENT = 0x020,
 };
 
+#pragma pack(push, 8)
+
 struct MESH_DESC
 {
     const char* szName{};
@@ -65,7 +67,7 @@ struct VERTEX_SOURCE
     XMFLOAT4 Tangent{ 0.0f, 1.0f, 0.0f, 1.0f };
 };
 
-struct MESH_SOURCE : LUnknown
+struct MESH_SOURCE
 {
     int nVertexFVF{};
     int nVertexSize{};
@@ -96,4 +98,6 @@ struct MESH_SOURCE : LUnknown
     }
 };
 
-L3DENGINE_API void LoadMesh(MESH_DESC* pDesc, MESH_SOURCE*& pSource);
+#pragma pack(pop)
+
+L3DENGINE_API void LoadMesh(MESH_DESC* pDesc, MESH_SOURCE* pSource);
