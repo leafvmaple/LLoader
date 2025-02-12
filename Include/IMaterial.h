@@ -3,9 +3,11 @@
 #include "LInterface.h"
 #include "LAssert.h"
 
+#pragma pack(push, 8)
+
 struct MODEL_MATERIAL_DESC
 {
-    const wchar_t* szFileName{};
+    const char* szFileName{};
 };
 
 struct MATERIAL_DEFINE
@@ -76,15 +78,17 @@ struct MATERIAL_LOD_SOURCE
     }
 };
 
-struct MODEL_MATERIAL_SOURCE : LUnknown
+struct MODEL_MATERIAL_SOURCE
 {
     unsigned int nLOD{};
     MATERIAL_LOD_SOURCE* pLOD{};
 
-    virtual ~MODEL_MATERIAL_SOURCE()
+    ~MODEL_MATERIAL_SOURCE()
     {
         delete[] pLOD;
     }
 };
 
-L3DENGINE_API void LoadModelMaterial(MODEL_MATERIAL_DESC* pDesc, MODEL_MATERIAL_SOURCE*& pSource);
+#pragma pack(pop)
+
+L3DENGINE_API void LoadModelMaterial(MODEL_MATERIAL_DESC* pDesc, MODEL_MATERIAL_SOURCE* pSource);
