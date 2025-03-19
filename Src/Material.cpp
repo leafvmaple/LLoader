@@ -96,3 +96,38 @@ void LoadModelMaterial(MODEL_MATERIAL_DESC* pDesc, MODEL_MATERIAL_SOURCE* pSourc
         }
     }
 }
+
+void LoadReferMaterial(REFER_MATERIAL_DESC* pDesc, REFER_MATERIAL_SOURCE* pSource)
+{
+    rapidjson::Document JsonDocument;
+    LFileReader::ReadJson(pDesc->szFileName, JsonDocument);
+
+    auto& InfoObject = JsonDocument["Info"];
+    std::string shaderName = InfoObject["Shader"].GetString();
+
+    auto& ParamObjectArray = JsonDocument["Param"];
+
+    pSource->pParam = new REFER_MATERIAL_SOURCE::_Param[ParamObjectArray.Size()];
+
+    for (int i = 0; i < ParamObjectArray.Size(); i++)
+    {
+        const auto& ParamObject = ParamObjectArray[i];
+        std::string sType = ParamObject["Type"].GetString();
+
+        if (sType == "Texture")
+        {
+            auto& Param = pSource->pParam[pSource->nParam++];
+
+            RapidJsonGet<MAX_PATH>(Param.szName, ParamObject, "Name");
+            RapidJsonGet<MAX_PATH>(Param.szRegister, ParamObject, "RegisterName");
+            RapidJsonGet<MAX_PATH>(Param.szValue, ParamObject, "Value");
+        }
+    }
+
+    size_t dotPos = shaderName.find_last_of('.');
+    if (dotPos != std::string::npos) {
+        shaderName = shaderName.substr(0, dotPos) + ".fx5";
+    }
+
+    strcpy(pSource->szShaderName, shaderName.c_str());
+}

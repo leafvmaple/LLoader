@@ -46,7 +46,7 @@ struct MATERIAL_SOURCE
         char szName[MAX_PATH]{};
         char szType[MAX_PATH]{};
         char szValue[MAX_PATH]{};
-    }*pTexture{};
+    }* pTexture{};
 
     MATERIAL_DEFINE Define{};
 
@@ -89,6 +89,31 @@ struct MODEL_MATERIAL_SOURCE
     }
 };
 
+struct REFER_MATERIAL_DESC
+{
+    const char* szFileName{};
+};
+
+struct REFER_MATERIAL_SOURCE
+{
+    char szShaderName[MAX_PATH];
+
+    unsigned int nParam{};
+
+    struct _Param
+    {
+        char szName[MAX_PATH]{};
+        char szRegister[MAX_PATH]{};
+        char szValue[MAX_PATH]{};
+    }* pParam{};
+
+    ~REFER_MATERIAL_SOURCE()
+    {
+        delete[] pParam;
+    }
+};
+
 #pragma pack(pop)
 
 L3DENGINE_API void LoadModelMaterial(MODEL_MATERIAL_DESC* pDesc, MODEL_MATERIAL_SOURCE* pSource);
+L3DENGINE_API void LoadReferMaterial(REFER_MATERIAL_DESC* pDesc, REFER_MATERIAL_SOURCE* pSource);
