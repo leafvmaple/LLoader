@@ -16,6 +16,13 @@
     }
 #endif
 
+#ifndef CHECK_HRESULT_RET
+#define CHECK_HRESULT_RET(hr, ret) \
+    if (!SUCCEEDED(hr)) { \
+        return ret;     \
+    }
+#endif
+
 #ifndef SAFE_FREE
 #define SAFE_FREE(p)    \
     if ((p)) {          \
