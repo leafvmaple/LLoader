@@ -192,6 +192,9 @@ void _LoadBone(MESH_SOURCE* pSource, _MESH_FILE_DATA* pData, LBinaryReader* pRea
         BONE_SOURCE& Bone = pSource->pBones[i];
 
         Reader.Copy(Bone.szName, 30);
+        for (int j = 0; Bone.szName[j]; j++)
+            Bone.szName[j] = tolower(Bone.szName[j]);
+
         Reader.Seek(30, SEEK::CURSOR);
 
         Reader.Convert(Bone.nChildCount);
@@ -199,6 +202,9 @@ void _LoadBone(MESH_SOURCE* pSource, _MESH_FILE_DATA* pData, LBinaryReader* pRea
         {
             Bone.pChildNames = new NAME_STRING[Bone.nChildCount];
             Reader.Copy(Bone.pChildNames, Bone.nChildCount);
+            for (int j = 0; j < Bone.nChildCount; j++)
+                for (int k = 0; Bone.pChildNames[j][k]; k++)
+                    Bone.pChildNames[j][k] = tolower(Bone.pChildNames[j][k]);
         }
 
         Reader.Copy(&Bone.mOffset);
@@ -255,8 +261,15 @@ void _LoadSocket(MESH_SOURCE* pSource, _MESH_FILE_DATA* pData, LBinaryReader* pR
     if (pSource->nSocketCount > 0)
     {
         pSource->pSockets = new SOCKET_SOURCE[pSource->nSocketCount];
-
         Reader.Copy(pSource->pSockets, pSource->nSocketCount);
+        for (int i = 0; i < pSource->nSocketCount; i++)
+        {
+            SOCKET_SOURCE& Socket = pSource->pSockets[i];
+            for (int j = 0; Socket.szName[j]; j++)
+                Socket.szName[j] = tolower(Socket.szName[j]);
+            for (int j = 0; Socket.szParentName[j]; j++)
+                Socket.szParentName[j] = tolower(Socket.szParentName[j]);
+        }
         std::sort(pSource->pSockets, pSource->pSockets + pSource->nSocketCount, [](SOCKET_SOURCE& left, SOCKET_SOURCE& right) {
             if (int nCmp = _stricmp(left.szName, right.szName))
                 return nCmp < 0;
