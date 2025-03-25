@@ -36,3 +36,5 @@ struct LUnknown : IUnknown
         assert(!nCount);
     }
 };
+
+typedef char NAME_STRING[30];

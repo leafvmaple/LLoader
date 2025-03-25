@@ -42,6 +42,12 @@
     <ClCompile Include="Src\Shader.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Skeleton.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Model.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\LFileReader.h">
@@ -84,6 +90,18 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Src\Shader.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ISkeleton.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Skeleton.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IModel.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Model.h">
       <Filter>Src</Filter>
     </ClInclude>
   </ItemGroup>

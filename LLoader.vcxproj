@@ -158,12 +158,16 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Material.cpp" />
     <ClCompile Include="Src\Mesh.cpp" />
+    <ClCompile Include="Src\Model.cpp" />
     <ClCompile Include="Src\Shader.cpp" />
+    <ClCompile Include="Src\Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\IAnimation.h" />
     <ClInclude Include="Include\IMesh.h" />
+    <ClInclude Include="Include\IModel.h" />
     <ClInclude Include="Include\IShader.h" />
+    <ClInclude Include="Include\ISkeleton.h" />
     <ClInclude Include="Include\LAssert.h" />
     <ClInclude Include="Include\ILandscape.h" />
     <ClInclude Include="Include\LFormat.h" />
@@ -174,7 +178,9 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
     <ClInclude Include="Src\Material.h" />
     <ClInclude Include="Src\LFileReader.h" />
     <ClInclude Include="Src\Mesh.h" />
+    <ClInclude Include="Src\Model.h" />
     <ClInclude Include="Src\Shader.h" />
+    <ClInclude Include="Src\Skeleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

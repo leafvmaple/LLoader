@@ -11,8 +11,6 @@
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
-typedef char NAME_STRING[30];
-
 enum D3DFVF
 {
     FVF_XYZW = 0x001,

@@ -59,7 +59,7 @@ struct ANIMATION_SOURCE
     float fFrameLength{};
     int nAnimationLength{};
 
-    char (*pBoneNames)[ANI_STRING_SIZE]{};
+    NAME_STRING* pBoneNames{};
     RTS** pBoneRTS{};
 
     int* pFlag{};
