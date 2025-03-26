@@ -174,9 +174,9 @@ void _LoadMesh(const char* szFileName, MESH_SOURCE* pSource, _MESH_FILE_DATA* pD
         _LoadSocket(pSource, pData, &Reader);
 
         pSource->nVertexFVF |= FVF_SKIN;
-        pSource->nVertexSize += sizeof(float) * VERTEX_MAX_BONE;
-        pSource->nVertexSize += sizeof(BYTE)* VERTEX_MAX_BONE;
     }
+    pSource->nVertexSize += sizeof(float) * VERTEX_MAX_BONE;
+    pSource->nVertexSize += sizeof(BYTE) * VERTEX_MAX_BONE;
 }
 
 void _LoadBone(MESH_SOURCE* pSource, _MESH_FILE_DATA* pData, LBinaryReader* pReader, BOOL bHasPxPose, BOOL bHasBoundBox)

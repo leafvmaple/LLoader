@@ -58,11 +58,11 @@ struct VERTEX_SOURCE
 {
     XMFLOAT3 Position{ 0.f, 0.f, 0.f };
     XMFLOAT3 Normal{ 0.f, 0.f, 0.f };
+    XMFLOAT4 Tangent{ 0.0f, 1.0f, 0.0f, 1.0f };
     XMCOLOR Color{ 0, 0, 0, 0 };
     XMFLOAT2 TexCoords{ 0.f, 0.f };
     float BoneWeights[VERTEX_MAX_BONE]{ 0.f };
     BYTE BoneIndices[VERTEX_MAX_BONE]{ 0xFF, 0xFF, 0xFF, 0xFF };
-    XMFLOAT4 Tangent{ 0.0f, 1.0f, 0.0f, 1.0f };
 };
 
 struct MESH_SOURCE
