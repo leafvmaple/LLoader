@@ -12,8 +12,8 @@ using namespace DirectX;
 
 struct LANDSCAPE_DESC
 {
-    const wchar_t* szDir{};
-    const wchar_t* szMapName{};
+    const char* szDir{};
+    const char* szMapName{};
 };
 
 struct LANDSCAPE_REGION
@@ -36,7 +36,7 @@ struct LANDSCAPE_MATERIAL
     MATERIAL_SOURCE* pLOD{}; // every LOD has a material
 };
 
-struct LANDSCAPE_SOURCE : LUnknown
+struct LANDSCAPE_SOURCE
 {
     UINT        RegionSize{};
     UINT        LeafNodeSize{};
@@ -56,4 +56,4 @@ struct LANDSCAPE_SOURCE : LUnknown
     }
 };
 
-L3DENGINE_API void LoadLandscape(LANDSCAPE_DESC* pDesc, LANDSCAPE_SOURCE*& pSource);
+L3DENGINE_API void LoadLandscape(LANDSCAPE_DESC* pDesc, LANDSCAPE_SOURCE* pSource);

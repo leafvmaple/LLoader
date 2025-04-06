@@ -7,7 +7,7 @@
 #include "ILandscape.h"
 #include "Material.h"
 
-void _LoadLandscapeRegion(LANDSCAPE_REGION& region, const wchar_t* filename)
+void _LoadLandscapeRegion(LANDSCAPE_REGION& region, const char* filename)
 {
     rapidjson::Document JsonDocument;
     LFileReader::ReadJson(filename, JsonDocument);
@@ -22,7 +22,7 @@ void _LoadLandscapeRegion(LANDSCAPE_REGION& region, const wchar_t* filename)
     }
 }
 
-void _LoadLandscapeHeight(LANDSCAPE_REGION& region, const wchar_t* filename)
+void _LoadLandscapeHeight(LANDSCAPE_REGION& region, const char* filename)
 {
     BYTE* pHeightData = nullptr;
     size_t nSize = 0;
@@ -34,7 +34,7 @@ void _LoadLandscapeHeight(LANDSCAPE_REGION& region, const wchar_t* filename)
     memcpy(region.pHeightData, pHeightData, region.nHeightData * region.nHeightData * sizeof(float));
 }
 
-void _LoadLandscapeMaterial(LANDSCAPE_SOURCE*& pSource, const wchar_t* szFileName)
+void _LoadLandscapeMaterial(LANDSCAPE_SOURCE* pSource, const char* szFileName)
 {
     rapidjson::Document JsonDocument;
     LFileReader::ReadJson(szFileName, JsonDocument);
@@ -61,7 +61,7 @@ void _LoadLandscapeMaterial(LANDSCAPE_SOURCE*& pSource, const wchar_t* szFileNam
     }
 }
 
-void _LoadLandscapeInfo(LANDSCAPE_SOURCE*& pSource, const wchar_t* szFileName)
+void _LoadLandscapeInfo(LANDSCAPE_SOURCE* pSource, const char* szFileName)
 {
     rapidjson::Document JsonDocument;
     LFileReader::ReadJson(szFileName, JsonDocument);
@@ -79,17 +79,14 @@ void _LoadLandscapeInfo(LANDSCAPE_SOURCE*& pSource, const wchar_t* szFileName)
     RapidJsonGet(pSource->UnitScale.y, JsonDocument, "UnitScale.y", 512);
 }
 
-void LoadLandscape(LANDSCAPE_DESC* pDesc, LANDSCAPE_SOURCE*& pSource)
+void LoadLandscape(LANDSCAPE_DESC* pDesc, LANDSCAPE_SOURCE* pSource)
 {
-    wchar_t szFileName[MAX_PATH];
+    char szFileName[MAX_PATH];
 
-    pSource = new LANDSCAPE_SOURCE;
-    pSource->AddRef();
-
-    wsprintf(szFileName, L"%s/landscape/%s_landscapeinfo.json", pDesc->szDir, pDesc->szMapName);
+    sprintf(szFileName, "%s/landscape/%s_landscapeinfo.json", pDesc->szDir, pDesc->szMapName);
     _LoadLandscapeInfo(pSource, szFileName);
 
-    wsprintf(szFileName, L"%s/landscape/%s_materials.json", pDesc->szDir, pDesc->szMapName);
+    sprintf(szFileName, "%s/landscape/%s_materials.json", pDesc->szDir, pDesc->szMapName);
     _LoadLandscapeMaterial(pSource, szFileName);
 
     pSource->pRegionTable = new LANDSCAPE_REGION[pSource->RegionTableSize.x * pSource->RegionTableSize.y];
@@ -100,10 +97,10 @@ void LoadLandscape(LANDSCAPE_DESC* pDesc, LANDSCAPE_SOURCE*& pSource)
         {
             auto& region = pSource->pRegionTable[i * pSource->RegionTableSize.y + j];
 
-            wsprintf(szFileName, L"%s/landscape/regioninfo/%s_%03d_%03d.json", pDesc->szDir, pDesc->szMapName, i, j);
+            sprintf(szFileName, "%s/landscape/regioninfo/%s_%03d_%03d.json", pDesc->szDir, pDesc->szMapName, i, j);
             _LoadLandscapeRegion(region, szFileName);
 
-            wsprintf(szFileName, L"%s/landscape/heightmap/%s_%03d_%03d.r32", pDesc->szDir, pDesc->szMapName, i, j);
+            sprintf(szFileName, "%s/landscape/heightmap/%s_%03d_%03d.r32", pDesc->szDir, pDesc->szMapName, i, j);
             _LoadLandscapeHeight(region, szFileName);
         }
     }
