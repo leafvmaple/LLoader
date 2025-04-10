@@ -153,6 +153,7 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\Animation.cpp" />
+    <ClCompile Include="Src\Flex.cpp" />
     <ClCompile Include="Src\Landscape.cpp" />
     <ClCompile Include="Src\LFileReader.cpp" />
     <ClCompile Include="Src\main.cpp" />
@@ -165,6 +166,7 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\IAnimation.h" />
+    <ClInclude Include="Include\IFlex.h" />
     <ClInclude Include="Include\IMesh.h" />
     <ClInclude Include="Include\IModel.h" />
     <ClInclude Include="Include\IScene.h" />
@@ -177,6 +179,7 @@ copy "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Lib\x64"</Command>
     <ClInclude Include="Include\LLoader.h" />
     <ClInclude Include="Include\IMaterial.h" />
     <ClInclude Include="Src\Animation.h" />
+    <ClInclude Include="Src\Flex.h" />
     <ClInclude Include="Src\Material.h" />
     <ClInclude Include="Src\LFileReader.h" />
     <ClInclude Include="Src\Mesh.h" />
