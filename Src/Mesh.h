@@ -47,7 +47,9 @@ struct _MESH_FILE_DATA_BLOCKS
     DWORD  BlendMeshBlock;
     DWORD  TangentBlock;
     DWORD  VetexRemapBlock;
-    DWORD  ExtendBlock[15];
+    DWORD  TextureUVW9Block;
+    DWORD  EmissiveBlock;
+    DWORD  ExtendBlock[13];
 };
 
 struct _MESH_FILE_MESH_HEAD

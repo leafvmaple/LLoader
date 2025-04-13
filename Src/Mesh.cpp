@@ -121,7 +121,6 @@ void _LoadMesh(const char* szFileName, MESH_SOURCE* pSource, _MESH_FILE_DATA* pD
     pSource->nVertexFVF |= FVF_TANGENT;
     pSource->nVertexSize += sizeof(XMFLOAT4);
 
-    // Color: XMCOLOR->float4
     if (pHead->MeshHead.Blocks.DiffuseBlock)
     {
         Reader.Seek(pHead->MeshHead.Blocks.DiffuseBlock);
@@ -143,6 +142,15 @@ void _LoadMesh(const char* szFileName, MESH_SOURCE* pSource, _MESH_FILE_DATA* pD
         pSource->nVertexFVF |= FVF_TEX1;
         pSource->nVertexSize += sizeof(XMFLOAT2);
     }
+
+    if (pHead->MeshHead.Blocks.EmissiveBlock)
+    {
+        Reader.Seek(pHead->MeshHead.Blocks.EmissiveBlock);
+        Reader.Convert(pColor, pSource->nVerticesCount);
+        for (int i = 0; i < pSource->nVerticesCount; i++)
+            pSource->pVertices[i].Emissive = pColor[i];
+    }
+    pSource->nVertexSize += sizeof(XMCOLOR);
 
     // Index
     if (pHead->MeshHead.Blocks.FacesIndexBlock)

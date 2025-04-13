@@ -56,13 +56,14 @@ struct SOCKET_SOURCE
 static const unsigned VERTEX_MAX_BONE = 4;
 struct VERTEX_SOURCE
 {
-    XMFLOAT3 Position{ 0.f, 0.f, 0.f };
-    XMFLOAT3 Normal{ 0.f, 0.f, 0.f };
+    XMFLOAT3 Position{};
+    XMFLOAT3 Normal{};
     XMFLOAT4 Tangent{ 0.0f, 1.0f, 0.0f, 1.0f };
-    XMCOLOR Color{ 0, 0, 0, 0 };
-    XMFLOAT2 TexCoords{ 0.f, 0.f };
-    float BoneWeights[VERTEX_MAX_BONE]{ 0.f };
+    XMCOLOR Color{};
+    XMFLOAT2 TexCoords{};
+    float BoneWeights[VERTEX_MAX_BONE]{};
     BYTE BoneIndices[VERTEX_MAX_BONE]{ 0xFF, 0xFF, 0xFF, 0xFF };
+    XMCOLOR Emissive{ 0xFF, 0xFF, 0xFF, 0xFF };
 };
 
 struct MESH_SOURCE
