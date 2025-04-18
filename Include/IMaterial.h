@@ -3,6 +3,14 @@
 #include "LInterface.h"
 #include "LAssert.h"
 
+enum BlendMode
+{
+    BLEND_Opaque,
+    BLEND_Masked,
+    BLEND_SoftMasked = 5,
+    BLEND_OIT = 11,
+};
+
 #pragma pack(push, 8)
 
 struct MODEL_MATERIAL_DESC
