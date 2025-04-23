@@ -9,6 +9,7 @@ enum BlendMode
     BLEND_Masked,
     BLEND_SoftMasked = 5,
     BLEND_OIT = 11,
+    BLEND_OITMask = 12,
 };
 
 #pragma pack(push, 8)
