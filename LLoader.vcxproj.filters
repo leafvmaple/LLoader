@@ -54,6 +54,9 @@
     <ClCompile Include="Src\Flex.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\GltfLoader.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\LFileReader.h">
@@ -121,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="Src\Flex.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GltfLoader.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IGltfLoader.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
