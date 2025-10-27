@@ -468,31 +468,19 @@ bool GltfLoader::ExtractSkinData(const tinygltf::Model& model, MESH_SOURCE* pSou
         {
             SOCKET_SOURCE socket;
             
-            // Copy socket name (remove "Socket_" prefix)
+            // Copy socket name (remove "Socket_" prefix) and convert to lowercase
             std::string socketName = node.name.substr(7); // Remove "Socket_"
+            std::transform(socketName.begin(), socketName.end(), socketName.begin(), ::tolower);
             strncpy_s(socket.szName, socketName.c_str(), sizeof(socket.szName) - 1);
             socket.szName[sizeof(socket.szName) - 1] = '\0';
             
             // Find parent bone name by checking which bone has this socket as child
             socket.szParentName[0] = '\0'; // Initialize as empty
-            for (size_t j = 0; j < model.nodes.size(); ++j)
-            {
-                const tinygltf::Node& parentNode = model.nodes[j];
-                if (!parentNode.children.empty())
-                {
-                    for (int childIdx : parentNode.children)
-                    {
-                        if (childIdx == static_cast<int>(i))
-                        {
-                            // Found parent, copy its name
-                            strncpy_s(socket.szParentName, parentNode.name.c_str(), 
-                                     sizeof(socket.szParentName) - 1);
-                            socket.szParentName[sizeof(socket.szParentName) - 1] = '\0';
-                            break;
-                        }
-                    }
-                }
-            }
+            tinygltf::Value extras = node.extras;
+
+            auto parent = extras.Get("parent");
+            auto parentName = parent.Get<std::string>();
+            strncpy_s(socket.szParentName, parentName.c_str(), sizeof(socket.szParentName) - 1);
             
             // Set transformation matrix
             if (node.matrix.size() == 16)
@@ -574,13 +562,12 @@ void GltfLoader::ConvertToMeshSource(MESH_SOURCE* pSource, const GLTF_DESC* pDes
     }
     
     // Calculate FVF based on actual vertex attributes present in glTF
-    DWORD fvf = 0;
+    DWORD fvf = FVF_XYZW | FVF_COLOR;
     
     // Check if we have actual vertex data to analyze
     if (!m_Vertices.empty()) {
         // Check a few vertices to determine what attributes are present
         bool hasNormals = false;
-        bool hasColors = false;
         bool hasTexCoords = false;
         bool hasSkinning = false;
         bool hasTangents = false;
@@ -592,11 +579,6 @@ void GltfLoader::ConvertToMeshSource(MESH_SOURCE* pSource, const GLTF_DESC* pDes
             // Check for normal
             if (!hasNormals && (vertex.Normal.x != 0.0f || vertex.Normal.y != 0.0f || vertex.Normal.z != 0.0f)) {
                 hasNormals = true;
-            }
-            
-            // Check for color (XMCOLOR is packed RGBA, check if it's not white/default)
-            if (!hasColors && vertex.Color.c != 0xFFFFFFFF && vertex.Color.c != 0) {
-                hasColors = true;
             }
             
             // Check for texture coordinates
@@ -619,7 +601,6 @@ void GltfLoader::ConvertToMeshSource(MESH_SOURCE* pSource, const GLTF_DESC* pDes
         
         // Set FVF flags based on detected attributes
         if (hasNormals) fvf |= FVF_NORMAL;
-        if (hasColors) fvf |= FVF_COLOR;
         if (hasTexCoords) fvf |= FVF_TEX1;
         if (hasSkinning) fvf |= FVF_SKIN;
         if (hasTangents) fvf |= FVF_TANGENT;
